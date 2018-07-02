@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1094759490701",
+    "firebase_url": "https://projectdemo-3884f.firebaseio.com",
+    "project_id": "projectdemo-3884f",
+    "storage_bucket": "projectdemo-3884f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094759490701:android:7ee1b8d21384db60",
+        "android_client_info": {
+          "package_name": "com.example.mctuan.restaurantmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094759490701-pienjp4fgfpvmvqugir1k126irhvfidp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mctuan.restaurantmanagement",
+            "certificate_hash": "5bc63d6646f9172c5a24995a7ff81b421664a4b2"
+          }
+        },
+        {
+          "client_id": "1094759490701-mr4ui8nbvnofotirimna9h4m2b4tgeeg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBboC2lnS7W3p66-pbyHADLOtQT1y7Xd5o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094759490701-mr4ui8nbvnofotirimna9h4m2b4tgeeg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
