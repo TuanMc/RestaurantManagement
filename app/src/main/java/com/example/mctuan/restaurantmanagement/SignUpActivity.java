@@ -39,7 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+//        btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
 
         // For reset password
 //        btnResetPassword.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
             }
         });
 
