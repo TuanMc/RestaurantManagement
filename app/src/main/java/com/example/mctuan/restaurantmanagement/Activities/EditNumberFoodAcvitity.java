@@ -12,11 +12,10 @@ import com.example.mctuan.restaurantmanagement.App;
 import com.example.mctuan.restaurantmanagement.Object.Food;
 import com.example.mctuan.restaurantmanagement.Object.Table;
 import com.example.mctuan.restaurantmanagement.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SetNumberFoodActivity extends AppCompatActivity {
+public class EditNumberFoodAcvitity extends AppCompatActivity {
 
     Button btnSet, btnCancel;
     NumberPicker numberPicker;
@@ -25,13 +24,15 @@ public class SetNumberFoodActivity extends AppCompatActivity {
     Table table;
 
     App app;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.number_picker_custom_layout);
+        setContentView(R.layout.edit_number_picker_custom_layout);
 
         app = (App) getApplication();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         Intent intent = getIntent();
         food = new Food(intent.getStringExtra("foodName"), intent.getStringExtra("foodID"),
@@ -55,18 +56,17 @@ public class SetNumberFoodActivity extends AppCompatActivity {
             public void onClick(View v) {
                 food.setTheNumber(numberFood);
 
-                boolean check = false;
-                for (Food temp : app.getFoods()) {
-                    if (temp.getID().equals(food.getID())) {
-                        temp.setTheNumber(food.getTheNumber());
-                        check = true;
-                    }
-                }
-                if (check == false) {
-                    app.getFoods().add(food);
-                }
+                Intent intent = new Intent(EditNumberFoodAcvitity.this, TableDetailActivity.class);
+                Bundle bundle = getIntent().getExtras();
+                table = new Table();
+                table.setID(bundle.getString("tableID"));
+                table.setTableName(bundle.getString("tableName"));
+                table.setTotalPayment(bundle.getString("totalPayment"));
+                intent.putExtras(bundle);
 
-                goToChoose();
+                databaseReference.child("tables").child(table.getID()).child("foods").child(food.getID()).setValue(food);
+
+                startActivity(intent);
             }
         });
 
@@ -80,11 +80,11 @@ public class SetNumberFoodActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        goToChoose();
+        goToDetail();
     }
 
-    private void goToChoose() {
-        Intent intent = new Intent(SetNumberFoodActivity.this, TableChooseFoodActivity.class);
+    private void goToDetail() {
+        Intent intent = new Intent(EditNumberFoodAcvitity.this, TableDetailActivity.class);
         Bundle bundle = getIntent().getExtras();
         table = new Table();
         table.setID(bundle.getString("tableID"));

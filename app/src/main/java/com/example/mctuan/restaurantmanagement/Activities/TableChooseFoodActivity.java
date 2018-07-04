@@ -38,6 +38,7 @@ public class TableChooseFoodActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
 
     String number;
+    String foodID = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,32 +78,29 @@ public class TableChooseFoodActivity extends AppCompatActivity {
 
         for (final Food temp : app.getFoods()) {
             if (!temp.getTheNumber().equals("0")) {
+                foodID = temp.getID();
+
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        number = dataSnapshot.child(temp.getID()).child("price").getValue(String.class);
+                        if (foodID.trim().length()>0) {
+                            number = dataSnapshot.child(foodID).child("theNumber").getValue(String.class);
+
+                            if (number != null) {
+                                int a = Integer.parseInt(temp.getTheNumber().trim()) + Integer.parseInt(number.trim());
+                                temp.setTheNumber(String.valueOf(a));
+                                saveHaveData(temp);
+                            } else {
+                                saveNoData(temp);
+                            }
+                        }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Toast.makeText(TableChooseFoodActivity.this, "Error loading!!!", Toast.LENGTH_LONG);
-                        if (progressBarDialog.isShowing()) {
-                            progressBarDialog.dismiss();
-                        }
                     }
                 });
-
-                if (number != null) {
-                    int a = Integer.parseInt(temp.getTheNumber()) + Integer.parseInt(number);
-                    temp.setTheNumber(String.valueOf(a));
-                    ref.child(temp.getID()).child("price").setValue(temp.getTheNumber());
-                } else {
-                    ref.child(temp.getID()).child("name").setValue(temp.getName());
-                    ref.child(temp.getID()).child("price").setValue(temp.getPrice());
-                    ref.child(temp.getID()).child("theNumber").setValue(temp.getTheNumber());
-                    ref.child(temp.getID()).child("description").setValue("");
-                    ref.child(temp.getID()).child("id").setValue(temp.getID());
-                }
             }
         }
 
@@ -110,13 +108,23 @@ public class TableChooseFoodActivity extends AppCompatActivity {
             progressBarDialog.dismiss();
         }
 
-        Intent intent = new Intent(this, TableDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("tableID", table.getID());
-        bundle.putString("tableName", table.getTableName());
-        bundle.putString("totalPayment", table.getTotalPayment());
-        intent.putExtras(bundle);
-        startActivity(intent);
+        goToDetail();
+    }
+
+    private void saveNoData(Food temp) {
+
+        DatabaseReference ref = databaseReference.child("tables").child(table.getID()).child("foods");
+        ref.child(temp.getID()).child("name").setValue(temp.getName());
+        ref.child(temp.getID()).child("price").setValue(temp.getPrice());
+        ref.child(temp.getID()).child("theNumber").setValue(temp.getTheNumber());
+        ref.child(temp.getID()).child("description").setValue("");
+        ref.child(temp.getID()).child("id").setValue(temp.getID());
+    }
+
+    private void saveHaveData(Food temp) {
+
+        DatabaseReference ref = databaseReference.child("tables").child(table.getID()).child("foods");
+        ref.child(temp.getID()).child("theNumber").setValue(temp.getTheNumber());
     }
 
     private void getMenuList() {
@@ -157,5 +165,20 @@ public class TableChooseFoodActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        goToDetail();
+    }
+
+    private void goToDetail() {
+        Intent intent = new Intent(this, TableDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("tableID", table.getID());
+        bundle.putString("tableName", table.getTableName());
+        bundle.putString("totalPayment", table.getTotalPayment());
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

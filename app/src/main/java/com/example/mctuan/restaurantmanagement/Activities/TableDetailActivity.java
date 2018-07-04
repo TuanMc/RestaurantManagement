@@ -75,6 +75,15 @@ public class TableDetailActivity extends AppCompatActivity {
                 goToCreateActivity();
             }
         });
+
+        btnPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                table.setTableName("0");
+                table.getFoods().clear();
+                databaseReference.child("tables").child(table.getID()).child("foods").removeValue();
+            }
+        });
     }
 
     private void goToCreateActivity() {
@@ -128,6 +137,7 @@ public class TableDetailActivity extends AppCompatActivity {
                 tvTotalPayment.setText("Total: " + table.getTotalPayment()+"đ");
 
                 TableDetailAdapter tableDetailAdapter = new TableDetailAdapter(TableDetailActivity.this, R.layout.row_foods, table.getFoods());
+                tableDetailAdapter.setTable(table);
                 lstFoods.setAdapter(tableDetailAdapter);
                 lstFoods.deferNotifyDataSetChanged();
             }

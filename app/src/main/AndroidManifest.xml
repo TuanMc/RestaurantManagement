@@ -35,6 +35,9 @@
         <activity android:name=".Activities.SetNumberFoodActivity">
         </activity>
 
+        <activity android:name=".Activities.EditNumberFoodAcvitity">
+        </activity>
+
         <activity android:name=".Activities.EditFoodActivity">
         </activity>
 
