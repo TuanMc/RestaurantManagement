@@ -19,16 +19,43 @@
         android:layout_height="1dp"
         android:background="@color/colorPrimary"/>
 
-    <TextView
-        android:id="@+id/tvAddTable"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="ADD A TABLE"
-        android:textColor="@color/colorPrimary"
-        android:background="@color/colorLightGray"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:gravity="center"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvAddTable"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="ADD A TABLE"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/colorLightGray"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/tvMenuFoods"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="MENU"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/colorLightGray"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

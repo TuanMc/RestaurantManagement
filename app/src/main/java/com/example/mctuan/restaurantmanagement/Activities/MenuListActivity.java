@@ -1,23 +1,23 @@
 package com.example.mctuan.restaurantmanagement.Activities;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mctuan.restaurantmanagement.Adapters.TableDetailAdapter;
+import com.example.mctuan.restaurantmanagement.Adapters.TableListAdapter;
 import com.example.mctuan.restaurantmanagement.App;
+import com.example.mctuan.restaurantmanagement.Object.Food;
+import com.example.mctuan.restaurantmanagement.Object.Table;
 import com.example.mctuan.restaurantmanagement.Object.TablesList;
 import com.example.mctuan.restaurantmanagement.R;
-import com.example.mctuan.restaurantmanagement.Object.Table;
-import com.example.mctuan.restaurantmanagement.Adapters.TableListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,75 +25,48 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by mctuan on 7/3/18.
- */
+public class MenuListActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-
-    GridView gridTable;
-    TextView tvAddTable;
+    TextView tvAddFood;
+    ListView lstFoods;
+    ArrayList<Food> foods;
 
     App app;
     FirebaseAuth auth;
     DatabaseReference databaseReference;
-    TablesList tablesList;
-
-    String number = "0";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.acitivity_table_detail);
 
         app = (App) getApplication();
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        getTableList();
+        tvAddFood = findViewById(R.id.tvAddFood);
 
-        tvAddTable = findViewById(R.id.tvAddTable);
+        lstFoods = findViewById(R.id.lstFoods);
+        TableDetailAdapter tableDetailAdapter = new TableDetailAdapter(this, R.layout.row_foods, );
+        lstFoods.setAdapter(tableDetailAdapter);
+        lstFoods.deferNotifyDataSetChanged();
 
-        gridTable = (GridView) findViewById(R.id.gridTable);
-        gridTable.setOnItemClickListener(this);
-
-        tvAddTable.setOnClickListener(new View.OnClickListener() {
+        tvAddFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createNewTable();
+                createNewFood();
             }
         });
     }
 
-    private void createNewTable() {
+    private void createNewFood() {
+        Food food = new Food();
 
-        Table table = new Table();
-/*
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                number = String.valueOf(dataSnapshot.child("numberTable").getValue(String.class));
-                Log.d("key", number + "");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MainActivity.this, "Error loading!!!", Toast.LENGTH_LONG);
-            }
-        });
-*/
-
-        int count = Integer.parseInt(number) + 1;
-        table.setTableName("TABLE " + count);
-        databaseReference.child("tables").push().setValue(table);
-        databaseReference.child("numberTable").setValue(String.valueOf(count));
     }
 
-    private void getTableList() {
+    private void getMenuList() {
 
         final ProgressDialog progressBarDialog= new ProgressDialog(this);
         progressBarDialog.setMessage("Please wait ...");
@@ -106,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     progressBarDialog.dismiss();
                 }
 
-                tablesList = new TablesList();
+                foods = new ArrayList<Food>();
                 tablesList.setNumberTable(String.valueOf(dataSnapshot.child("numberTable").getValue(String.class)));
                 tablesList.setTables(new ArrayList<Table>());
                 tablesList.getTables().clear();
@@ -135,18 +108,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
         });
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Table table = tablesList.getTables().get(position);
-        Intent intent = new Intent(this, TableDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("tableID", table.getID());
-        bundle.putString("tableName", table.getTableName());
-        bundle.putString("totalPayment", table.getTotalPayment());
-        bundle.putSerializable("foods", table.getFoods());
-        intent.putExtras(bundle);
-        startActivity(intent);
     }
 }
