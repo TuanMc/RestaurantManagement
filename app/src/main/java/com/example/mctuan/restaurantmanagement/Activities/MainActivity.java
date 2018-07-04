@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -35,7 +39,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     GridView gridTable;
-    TextView tvAddTable, tvMenuFoods;
+    TextView tvAddTable;
 
     App app;
     FirebaseAuth auth;
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     TablesList tablesList;
 
     String number = "0";
+
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         getTableList();
 
         tvAddTable = findViewById(R.id.tvAddTable);
-        tvMenuFoods = findViewById(R.id.tvMenuFoods);
 
         gridTable = (GridView) findViewById(R.id.gridTable);
         gridTable.setOnItemClickListener(this);
@@ -67,12 +73,49 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 createNewTable();
             }
         });
-        tvMenuFoods.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToMenuList();
-            }
-        });
+
+        mDrawerLayout = findViewById(R.id.drawer);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        int id = menuItem.getItemId();
+
+                        if (id == R.id.order) {
+                            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        } else if (id == R.id.food_menu) {
+                            goToMenuList();
+                        } else if (id == R.id.user_management) {
+
+                        } else if (id == R.id.logout) {
+
+                        }
+
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+
+                        return true;
+                    }
+                });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item))
+            return true;
+        return super.onOptionsItemSelected(item);
     }
 
     private void goToMenuList() {
