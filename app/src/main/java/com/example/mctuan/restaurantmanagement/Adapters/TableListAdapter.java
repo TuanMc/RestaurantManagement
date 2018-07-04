@@ -51,7 +51,7 @@ public class TableListAdapter extends ArrayAdapter<Table> {
 
         Table table = tables.get(position);
         holder.tvTableName.setText(table.getTableName());
-        int imageId = this.context.getApplicationContext().getResources().getIdentifier("Table",
+        int imageId = this.context.getApplicationContext().getResources().getIdentifier("table",
                 "drawable", this.context.getPackageName());
         if (imageId > 0) {
             holder.imgTable.setImageResource(imageId);
