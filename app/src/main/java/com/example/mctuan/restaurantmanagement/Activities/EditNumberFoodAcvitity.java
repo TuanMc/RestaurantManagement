@@ -1,5 +1,7 @@
 package com.example.mctuan.restaurantmanagement.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -59,7 +61,33 @@ public class EditNumberFoodAcvitity extends AppCompatActivity {
         btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                food.setTheNumber(numberFood);
+                final AlertDialog.Builder alBuilder = new AlertDialog.Builder(EditNumberFoodAcvitity.this);
+                alBuilder.setTitle("FUNCTIONS");
+                alBuilder.setMessage("You want to set this number");
+                alBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        food.setTheNumber(numberFood);
+
+                        Intent intent = new Intent(EditNumberFoodAcvitity.this, TableDetailActivity.class);
+                        Bundle bundle = getIntent().getExtras();
+                        table = new Table();
+                        table.setID(bundle.getString("tableID"));
+                        table.setTableName(bundle.getString("tableName"));
+                        table.setTotalPayment(bundle.getString("totalPayment"));
+                        intent.putExtras(bundle);
+
+                        databaseReference.child("tables").child(table.getID()).child("foods").child(food.getID()).setValue(food);
+
+                        startActivity(intent);
+                    }
+                });
+
+                alBuilder.setNegativeButton("Reject", null);
+
+                alBuilder.create().show();
+
+                /*food.setTheNumber(numberFood);
 
                 Intent intent = new Intent(EditNumberFoodAcvitity.this, TableDetailActivity.class);
                 Bundle bundle = getIntent().getExtras();
@@ -71,7 +99,7 @@ public class EditNumberFoodAcvitity extends AppCompatActivity {
 
                 databaseReference.child("tables").child(table.getID()).child("foods").child(food.getID()).setValue(food);
 
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
 

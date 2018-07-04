@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mctuan.restaurantmanagement.Activities.EditFoodActivity;
+import com.example.mctuan.restaurantmanagement.Activities.TableDetailActivity;
 import com.example.mctuan.restaurantmanagement.Object.Food;
 import com.example.mctuan.restaurantmanagement.Object.Table;
 import com.example.mctuan.restaurantmanagement.R;
@@ -72,19 +73,54 @@ public class MenuListAdapter extends ArrayAdapter<Food> {
                 alBuilder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(context.getApplicationContext(), EditFoodActivity.class);
+
+                        final AlertDialog.Builder alBuilder = new AlertDialog.Builder(context);
+                        alBuilder.setTitle("FUNCTIONS");
+                        alBuilder.setMessage("You want to edit this food");
+                        alBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(context.getApplicationContext(), EditFoodActivity.class);
+                                intent.putExtra("foodID", food.getID());
+                                intent.putExtra("foodName", food.getName());
+                                intent.putExtra("foodPrice", food.getPrice());
+                                intent.putExtra("foodDescription", food.getDescription());
+                                context.startActivity(intent);
+                            }
+                        });
+
+                        alBuilder.setNegativeButton("Reject", null);
+
+                        alBuilder.create().show();
+
+                        /*Intent intent = new Intent(context.getApplicationContext(), EditFoodActivity.class);
                         intent.putExtra("foodID", food.getID());
                         intent.putExtra("foodName", food.getName());
                         intent.putExtra("foodPrice", food.getPrice());
                         intent.putExtra("foodDescription", food.getDescription());
-                        context.startActivity(intent);
+                        context.startActivity(intent);*/
                     }
                 });
 
                 alBuilder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        deleteFood(food.getID());
+
+                        final AlertDialog.Builder alBuilder = new AlertDialog.Builder(context);
+                        alBuilder.setTitle("FUNCTIONS");
+                        alBuilder.setMessage("You want to delete this food");
+                        alBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteFood(food.getID());
+                            }
+                        });
+
+                        alBuilder.setNegativeButton("Reject", null);
+
+                        alBuilder.create().show();
+
+                        //deleteFood(food.getID());
                     }
                 });
 

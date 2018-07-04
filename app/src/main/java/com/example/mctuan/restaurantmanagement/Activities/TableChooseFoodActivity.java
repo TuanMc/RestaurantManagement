@@ -1,6 +1,8 @@
 package com.example.mctuan.restaurantmanagement.Activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -63,7 +65,20 @@ public class TableChooseFoodActivity extends AppCompatActivity {
         tvSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveToData();
+                final AlertDialog.Builder alBuilder = new AlertDialog.Builder(TableChooseFoodActivity.this);
+                alBuilder.setTitle("FUNCTIONS");
+                alBuilder.setMessage("You want to save for this order");
+                alBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        saveToData();
+                    }
+                });
+
+                alBuilder.setNegativeButton("Reject", null);
+
+                alBuilder.create().show();
+ //               saveToData();
             }
         });
     }

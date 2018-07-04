@@ -1,5 +1,7 @@
 package com.example.mctuan.restaurantmanagement.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -58,7 +60,33 @@ public class SetNumberFoodActivity extends AppCompatActivity {
         btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                food.setTheNumber(numberFood);
+                final AlertDialog.Builder alBuilder = new AlertDialog.Builder(SetNumberFoodActivity.this);
+                alBuilder.setTitle("FUNCTIONS");
+                alBuilder.setMessage("You want to set this number");
+                alBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        food.setTheNumber(numberFood);
+
+                        boolean check = false;
+                        for (Food temp : app.getFoods()) {
+                            if (temp.getID().equals(food.getID())) {
+                                temp.setTheNumber(food.getTheNumber());
+                                check = true;
+                            }
+                        }
+                        if (check == false) {
+                            app.getFoods().add(food);
+                        }
+
+                        goToChoose();
+                    }
+                });
+
+                alBuilder.setNegativeButton("Reject", null);
+
+                alBuilder.create().show();
+                /*food.setTheNumber(numberFood);
 
                 boolean check = false;
                 for (Food temp : app.getFoods()) {
@@ -71,7 +99,7 @@ public class SetNumberFoodActivity extends AppCompatActivity {
                     app.getFoods().add(food);
                 }
 
-                goToChoose();
+                goToChoose();*/
             }
         });
 

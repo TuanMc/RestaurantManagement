@@ -1,6 +1,8 @@
 package com.example.mctuan.restaurantmanagement.Activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -71,17 +73,46 @@ public class TableDetailActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                app.getFoods().clear();
-                goToCreateActivity();
+                final AlertDialog.Builder alBuilder = new AlertDialog.Builder(TableDetailActivity.this);
+                alBuilder.setTitle("FUNCTIONS");
+                alBuilder.setMessage("You want to add food for this table");
+                alBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        app.getFoods().clear();
+                        goToCreateActivity();
+                    }
+                });
+
+                alBuilder.setNegativeButton("Reject", null);
+
+                alBuilder.create().show();
+                /*app.getFoods().clear();
+                goToCreateActivity();*/
             }
         });
 
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                table.setTableName("0");
+                final AlertDialog.Builder alBuilder = new AlertDialog.Builder(TableDetailActivity.this);
+                alBuilder.setTitle("FUNCTIONS");
+                alBuilder.setMessage("You want to pay for this table");
+                alBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        table.setTableName("0");
+                        table.getFoods().clear();
+                        databaseReference.child("tables").child(table.getID()).child("foods").removeValue();
+                    }
+                });
+
+                alBuilder.setNegativeButton("Reject", null);
+
+                alBuilder.create().show();
+                /*table.setTableName("0");
                 table.getFoods().clear();
-                databaseReference.child("tables").child(table.getID()).child("foods").removeValue();
+                databaseReference.child("tables").child(table.getID()).child("foods").removeValue();*/
             }
         });
     }
