@@ -38,22 +38,22 @@
             android:textStyle="bold"
             android:gravity="center"/>
 
-  <!--      <TextView
+       <TextView
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/colorWhite"/>
 
         <TextView
-            android:id="@+id/tvMenuFoods"
+            android:id="@+id/tvRemoveTable"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="MENU"
-            android:textColor="@color/colorPrimary"
-            android:background="@color/colorLightGray"
+            android:text="-"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:gravity="center"/>-->
+            android:gravity="center"/>
 
     </LinearLayout>
 

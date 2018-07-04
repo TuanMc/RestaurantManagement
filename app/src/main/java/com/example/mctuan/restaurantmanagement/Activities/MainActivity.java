@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     GridView gridTable;
-    TextView tvAddTable;
+    TextView tvAddTable, tvRemoveTable;
 
     App app;
     FirebaseAuth auth;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         getTableList();
 
         tvAddTable = findViewById(R.id.tvAddTable);
+        tvRemoveTable = findViewById(R.id.tvRemoveTable);
 
         gridTable = (GridView) findViewById(R.id.gridTable);
         gridTable.setOnItemClickListener(this);
@@ -79,6 +81,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         createNewTable();
+                    }
+                });
+
+                alBuilder.setNegativeButton("Reject", null);
+
+                alBuilder.create().show();
+//                createNewTable();
+            }
+        });
+
+        tvRemoveTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder alBuilder = new AlertDialog.Builder(MainActivity.this);
+                alBuilder.setTitle("FUNCTIONS");
+                alBuilder.setMessage("You want to delete a table");
+                alBuilder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteTable();
                     }
                 });
 
@@ -110,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         } else if (id == R.id.food_menu) {
                             goToMenuList();
                         } else if (id == R.id.user_management) {
-
+  //                          goToUserManagment();
                         } else if (id == R.id.logout) {
 
                         }
@@ -124,6 +146,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         return true;
                     }
                 });
+    }
+
+    private void deleteTable() {
+        String id = tablesList.getTables().get(Integer.parseInt(number)-1).getID();
+        databaseReference.child("tables").child(id).removeValue();
     }
 
     @Override
@@ -217,6 +244,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         bundle.putString("totalPayment", table.getTotalPayment());
         bundle.putSerializable("foods", table.getFoods());
         intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    private void goToUserManagment() {
+        Intent intent = new Intent(this, UserManActivity.class);
         startActivity(intent);
     }
 }
