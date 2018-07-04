@@ -1,9 +1,11 @@
 package com.example.mctuan.restaurantmanagement.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class TableDetailActivity extends AppCompatActivity {
     ListView lstFoods;
     TextView tvTotalPayment;
     Table table;
+    Button btnAdd, btnPay;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +35,9 @@ public class TableDetailActivity extends AppCompatActivity {
         table.setTableName(bundle.getString("tableName"));
         table.setTotalPayment(bundle.getString("totalPayment"));
 
+        btnAdd = findViewById(R.id.btnAdd);
+        btnPay = findViewById(R.id.btnPay);
+
         table.setFoods(new ArrayList<Food>());
         table.setFoods((ArrayList<Food>) bundle.getSerializable("foods"));
 
@@ -42,5 +48,11 @@ public class TableDetailActivity extends AppCompatActivity {
         TableDetailAdapter tableDetailAdapter = new TableDetailAdapter(this, R.layout.row_foods, table.getFoods());
         lstFoods.setAdapter(tableDetailAdapter);
         lstFoods.deferNotifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

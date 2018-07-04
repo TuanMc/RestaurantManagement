@@ -71,4 +71,9 @@ public class NewFoodActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MenuListActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        goToMenuList();
+    }
 }
