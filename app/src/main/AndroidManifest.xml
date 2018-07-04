@@ -23,6 +23,9 @@
         <activity android:name=".Activities.MainActivity">
         </activity>
 
+        <activity android:name=".Activities.TableDetailActivity">
+        </activity>
+
         <activity android:name=".Activities.ResetPasswordActivity">
         </activity>
     </application>
