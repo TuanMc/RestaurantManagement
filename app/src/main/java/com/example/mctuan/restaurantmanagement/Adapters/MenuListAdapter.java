@@ -3,6 +3,7 @@ package com.example.mctuan.restaurantmanagement.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class MenuListAdapter extends ArrayAdapter<Food> {
 
         Food food = foods.get(position);
         holder.tvFoodName.setText(food.getName());
+        Log.d("OKKK", food.getName());
         holder.tvFoodPrice.setText(food.getPrice());
         holder.tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override

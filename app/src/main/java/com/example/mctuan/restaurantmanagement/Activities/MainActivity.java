@@ -35,7 +35,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     GridView gridTable;
-    TextView tvAddTable;
+    TextView tvAddTable, tvMenuFoods;
 
     App app;
     FirebaseAuth auth;
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         getTableList();
 
         tvAddTable = findViewById(R.id.tvAddTable);
+        tvMenuFoods = findViewById(R.id.tvMenuFoods);
 
         gridTable = (GridView) findViewById(R.id.gridTable);
         gridTable.setOnItemClickListener(this);
@@ -66,6 +67,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 createNewTable();
             }
         });
+        tvMenuFoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMenuList();
+            }
+        });
+    }
+
+    private void goToMenuList() {
+        Intent intent = new Intent(this, MenuListActivity.class);
+        startActivity(intent);
     }
 
     private void createNewTable() {

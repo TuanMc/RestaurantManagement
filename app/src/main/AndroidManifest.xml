@@ -26,6 +26,12 @@
         <activity android:name=".Activities.TableDetailActivity">
         </activity>
 
+        <activity android:name=".Activities.MenuListActivity">
+        </activity>
+
+        <activity android:name=".Activities.NewFoodActivity">
+        </activity>
+
         <activity android:name=".Activities.ResetPasswordActivity">
         </activity>
     </application>
