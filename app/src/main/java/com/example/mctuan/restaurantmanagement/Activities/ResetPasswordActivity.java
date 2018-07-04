@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * Created by mctuan on 7/3/18.
+ * Test
  */
 
 public class ResetPasswordActivity extends AppCompatActivity {
