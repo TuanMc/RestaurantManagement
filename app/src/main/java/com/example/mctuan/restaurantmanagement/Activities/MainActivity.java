@@ -134,7 +134,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         } else if (id == R.id.user_management) {
   //                          goToUserManagment();
                         } else if (id == R.id.logout) {
-
+                            auth.signOut();
+                            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                            startActivity(intent);
                         }
 
                         // close drawer when item is tapped

@@ -26,6 +26,7 @@ import com.example.mctuan.restaurantmanagement.Object.Table;
 import com.example.mctuan.restaurantmanagement.Object.TablesList;
 import com.example.mctuan.restaurantmanagement.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -93,7 +94,9 @@ public class MenuListActivity extends AppCompatActivity {
                         } else if (id == R.id.user_management) {
 
                         } else if (id == R.id.logout) {
-
+                            auth.signOut();
+                            Intent intent = new Intent(MenuListActivity.this, SignInActivity.class);
+                            startActivity(intent);
                         }
 
                         // close drawer when item is tapped
@@ -121,7 +124,7 @@ public class MenuListActivity extends AppCompatActivity {
 
     private void getMenuList() {
 
-        final ProgressDialog progressBarDialog= new ProgressDialog(this);
+        final ProgressDialog progressBarDialog = new ProgressDialog(this);
         progressBarDialog.setMessage("Please wait ...");
         progressBarDialog.show();
         databaseReference.addValueEventListener(new ValueEventListener() {

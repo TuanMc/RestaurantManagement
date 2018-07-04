@@ -52,7 +52,8 @@
                 android:layout_weight="1"
                 android:layout_gravity="right"
                 android:background="@color/colorPrimary"
-                android:text="+"
+                android:text="Add order"
+                android:textAllCaps="false"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorWhite" />
@@ -69,7 +70,8 @@
                 android:layout_weight="1"
                 android:layout_gravity="right"
                 android:background="@color/colorPrimary"
-                android:text="PAY"
+                android:text="Pay"
+                android:textAllCaps="false"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorWhite" />

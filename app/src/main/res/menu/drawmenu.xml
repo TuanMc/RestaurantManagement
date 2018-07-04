@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/order" android:title="Order"></item>
-<item android:id="@+id/food_menu" android:title="Menu"></item>
-<item android:id="@+id/user_management" android:title="User Management"></item>
-<item android:id="@+id/logout" android:title="Log out"></item>
+<item android:id="@+id/order" android:title="Order" android:icon="@drawable/order"></item>
+<item android:id="@+id/food_menu" android:title="Menu" android:icon="@drawable/food"></item>
+<item android:id="@+id/user_management" android:title="User Management" android:icon="@drawable/users"></item>
+<item android:id="@+id/logout" android:title="Log out" android:icon="@drawable/logout"></item>
 </menu>
