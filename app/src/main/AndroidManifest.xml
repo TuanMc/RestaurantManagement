@@ -32,6 +32,9 @@
         <activity android:name=".Activities.NewFoodActivity">
         </activity>
 
+        <activity android:name=".Activities.EditFoodActivity">
+        </activity>
+
         <activity android:name=".Activities.ResetPasswordActivity">
         </activity>
     </application>
