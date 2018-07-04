@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvFoodName"
+            android:id="@+id/tvFoodNameMENU"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Food Name"
@@ -18,7 +18,7 @@
             android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/tvFoodPrice"
+            android:id="@+id/tvFoodPriceMENU"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Food Rice"
@@ -27,7 +27,7 @@
             android:textSize="16sp"/>
 
         <TextView
-            android:id="@+id/tvEdit"
+            android:id="@+id/tvEditMENU"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

@@ -45,9 +45,9 @@ public class MenuListAdapter extends ArrayAdapter<Food> {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(resource, null);
             holder = new MenuFoodHolder();
-            holder.tvFoodName = (TextView) convertView.findViewById(R.id.tvFoodName);
-            holder.tvFoodPrice = (TextView) convertView.findViewById(R.id.tvFoodPrice);
-            holder.tvEdit = (TextView) convertView.findViewById(R.id.tvEdit);
+            holder.tvFoodName = (TextView) convertView.findViewById(R.id.tvFoodNameMENU);
+            holder.tvFoodPrice = (TextView) convertView.findViewById(R.id.tvFoodPriceMENU);
+            holder.tvEdit = (TextView) convertView.findViewById(R.id.tvEditMENU);
             convertView.setTag(holder);
         } else {
             holder = (MenuFoodHolder) convertView.getTag();
@@ -55,7 +55,6 @@ public class MenuListAdapter extends ArrayAdapter<Food> {
 
         Food food = foods.get(position);
         holder.tvFoodName.setText(food.getName());
-        Log.d("OKKK", food.getName());
         holder.tvFoodPrice.setText(food.getPrice());
         holder.tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
