@@ -45,6 +45,7 @@ public class TableDetailAdapter extends ArrayAdapter<Food> {
             holder.tvFoodName = (TextView) convertView.findViewById(R.id.tvFoodName);
             holder.tvFoodPrice = (TextView) convertView.findViewById(R.id.tvFoodPrice);
             holder.tvEdit = (TextView) convertView.findViewById(R.id.tvEdit);
+            holder.tvNumber = (TextView) convertView.findViewById(R.id.tvNumber);
             convertView.setTag(holder);
         } else {
             holder = (TableFoodHolder) convertView.getTag();
@@ -53,6 +54,7 @@ public class TableDetailAdapter extends ArrayAdapter<Food> {
         Food food = foods.get(position);
         holder.tvFoodName.setText(food.getName());
         holder.tvFoodPrice.setText(food.getPrice());
+        holder.tvNumber.setText("number: " + food.getTheNumber());
         holder.tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +65,6 @@ public class TableDetailAdapter extends ArrayAdapter<Food> {
     }
 
     class TableFoodHolder {
-        TextView tvFoodName, tvFoodPrice, tvEdit;
+        TextView tvFoodName, tvFoodPrice, tvEdit, tvNumber;
     }
 }

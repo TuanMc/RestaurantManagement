@@ -26,7 +26,13 @@
         <activity android:name=".Activities.MenuListActivity">
         </activity>
 
+        <activity android:name=".Activities.TableChooseFoodActivity">
+        </activity>
+
         <activity android:name=".Activities.NewFoodActivity">
+        </activity>
+
+        <activity android:name=".Activities.SetNumberFoodActivity">
         </activity>
 
         <activity android:name=".Activities.EditFoodActivity">

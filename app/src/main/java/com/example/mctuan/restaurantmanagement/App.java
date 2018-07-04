@@ -7,13 +7,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.mctuan.restaurantmanagement.Object.Food;
+
+import java.util.ArrayList;
+
 public class App extends Application {
 
     public static final String FCM_TOKEN = "fcm_token";
+    private ArrayList<Food> foods;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        foods = new ArrayList<Food>();
     }
 
     public void savePref(String key, String value) {
@@ -41,5 +47,13 @@ public class App extends Application {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    public ArrayList<Food> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(ArrayList<Food> foods) {
+        this.foods = foods;
     }
 }
