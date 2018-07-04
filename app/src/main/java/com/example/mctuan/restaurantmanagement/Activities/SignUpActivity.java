@@ -5,27 +5,35 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.mctuan.restaurantmanagement.Object.User;
 import com.example.mctuan.restaurantmanagement.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by mctuan on 7/2/18.
  */
 
 public class SignUpActivity extends AppCompatActivity {
-    private EditText inputEmail, inputPassword;
+    private EditText inputEmail, inputPassword, inputFullName;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
+    private CheckBox checkBox;
+    private User user;
     FirebaseAuth auth;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +42,16 @@ public class SignUpActivity extends AppCompatActivity {
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
+        inputFullName = (EditText) findViewById(R.id.fullName);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+        checkBox = (CheckBox) findViewById(R.id.checkbox_isAdmin);
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
+                String fullName = inputFullName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -78,12 +90,17 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
+                // create new user object
+                user = new User(fullName, checkBox.isChecked());
+
                 progressBar.setVisibility(View.VISIBLE);
                 //create user
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                // show success message
                                 Toast.makeText(SignUpActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 // If sign in fails, display a message to the user. If sign in succeeds
@@ -93,6 +110,9 @@ public class SignUpActivity extends AppCompatActivity {
                                     Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+                                    // add new user to DB
+                                    addNewUserToDB(user);
+
                                     startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
                                     finish();
                                 }
@@ -107,5 +127,13 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.GONE);
+    }
+
+    private void addNewUserToDB(User user) {
+        if(user != null) {
+            String uid = auth.getCurrentUser().getUid();
+            databaseReference.child("users").child(uid).child("name").setValue(user.getFullName());
+            databaseReference.child("users").child(uid).child("isAdmin").setValue(user.isAdmin());
+        }
     }
 }

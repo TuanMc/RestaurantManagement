@@ -31,7 +31,7 @@ public class SignInActivity extends AppCompatActivity {
 
         //Get Firebase auth instance
 //        auth = FirebaseAuth.getInstance();
-
+//
 //        if (auth.getCurrentUser() != null) {
 //
 //            // trang home
