@@ -3,6 +3,9 @@
     <color name="colorPrimary">#00bcd4</color>
     <color name="colorPrimaryDark">#0097a7</color>
     <color name="colorAccent">#f2fe71</color>
+    <color name="colorRed">#ff0008</color>
+    <color name="colorPuple">#b142ec</color>
+    <color name="colorLightGray">#d9d9d9</color>
 
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>
