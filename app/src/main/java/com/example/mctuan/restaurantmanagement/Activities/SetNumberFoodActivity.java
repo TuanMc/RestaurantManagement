@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.example.mctuan.restaurantmanagement.App;
 import com.example.mctuan.restaurantmanagement.Object.Food;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SetNumberFoodActivity extends AppCompatActivity {
 
+    TextView tvNameFood;
     Button btnSet, btnCancel;
     NumberPicker numberPicker;
     Food food;
@@ -39,6 +41,9 @@ public class SetNumberFoodActivity extends AppCompatActivity {
 
         btnSet = findViewById(R.id.btnSet);
         btnCancel = findViewById(R.id.btnCancel);
+        tvNameFood = findViewById(R.id.tvNameFood);
+        tvNameFood.setText(food.getName());
+
         numberPicker = findViewById(R.id.numberPicker);
         numberPicker.setMaxValue(200);
         numberPicker.setMinValue(0);
