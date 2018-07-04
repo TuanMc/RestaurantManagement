@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mctuan.restaurantmanagement.Activities.EditFoodActivity;
 import com.example.mctuan.restaurantmanagement.Object.Food;
 import com.example.mctuan.restaurantmanagement.Object.Table;
 import com.example.mctuan.restaurantmanagement.R;
@@ -43,7 +45,7 @@ public class MenuListAdapter extends ArrayAdapter<Food> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         MenuFoodHolder holder;
         if(convertView == null) {
 
@@ -70,7 +72,12 @@ public class MenuListAdapter extends ArrayAdapter<Food> {
                 alBuilder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        Intent intent = new Intent(context.getApplicationContext(), EditFoodActivity.class);
+                        intent.putExtra("foodID", food.getID());
+                        intent.putExtra("foodName", food.getName());
+                        intent.putExtra("foodPrice", food.getPrice());
+                        intent.putExtra("foodDescription", food.getDescription());
+                        context.startActivity(intent);
                     }
                 });
 
@@ -80,6 +87,7 @@ public class MenuListAdapter extends ArrayAdapter<Food> {
                         deleteFood(food.getID());
                     }
                 });
+
                 alBuilder.create().show();
             }
         });
