@@ -1,6 +1,9 @@
 package com.example.mctuan.restaurantmanagement.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -15,6 +18,8 @@ import android.widget.TextView;
 import com.example.mctuan.restaurantmanagement.Object.Food;
 import com.example.mctuan.restaurantmanagement.Object.Table;
 import com.example.mctuan.restaurantmanagement.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -45,22 +50,37 @@ public class MenuListAdapter extends ArrayAdapter<Food> {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(resource, null);
             holder = new MenuFoodHolder();
-            holder.tvFoodName = (TextView) convertView.findViewById(R.id.tvFoodName);
-            holder.tvFoodPrice = (TextView) convertView.findViewById(R.id.tvFoodPrice);
-            holder.tvEdit = (TextView) convertView.findViewById(R.id.tvEdit);
+            holder.tvFoodName = (TextView) convertView.findViewById(R.id.tvFoodNameMENU);
+            holder.tvFoodPrice = (TextView) convertView.findViewById(R.id.tvFoodPriceMENU);
+            holder.tvEdit = (TextView) convertView.findViewById(R.id.tvEditMENU);
             convertView.setTag(holder);
         } else {
             holder = (MenuFoodHolder) convertView.getTag();
         }
 
-        Food food = foods.get(position);
+        final Food food = foods.get(position);
         holder.tvFoodName.setText(food.getName());
-        Log.d("OKKK", food.getName());
-        holder.tvFoodPrice.setText(food.getPrice());
+        holder.tvFoodPrice.setText(food.getPrice() + " đ");
         holder.tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final AlertDialog.Builder alBuilder = new AlertDialog.Builder(context);
+                alBuilder.setTitle("FUNCTIONS");
+                alBuilder.setMessage("You want to ...");
+                alBuilder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
+                    }
+                });
+
+                alBuilder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteFood(food.getID());
+                    }
+                });
+                alBuilder.create().show();
             }
         });
         return convertView;
@@ -68,5 +88,10 @@ public class MenuListAdapter extends ArrayAdapter<Food> {
 
     class MenuFoodHolder {
         TextView tvFoodName, tvFoodPrice, tvEdit;
+    }
+
+    private void deleteFood(String id) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("menu").child(id).removeValue();
     }
 }
